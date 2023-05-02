@@ -1,5 +1,7 @@
 package tech.devinhouse.exercicios.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Veiculo {
+@Entity
+public class Veiculos    {
+    @Id
     private String placa;
 
     private String tipo;
@@ -18,7 +22,8 @@ public class Veiculo {
 
     private Integer quatidadeMultas;
 
-    public Veiculo(String placa, String tipo, String cor, Integer anoDeFabricacao) {
+    public Veiculos
+            (String placa, String tipo, String cor, Integer anoDeFabricacao) {
         this.placa = placa;
         this.tipo = tipo;
         this.cor = cor;
