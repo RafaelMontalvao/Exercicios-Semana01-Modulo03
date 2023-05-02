@@ -14,7 +14,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("api/veiculo")
+@RequestMapping("api/veiculos")
 public class VeiculoController {
     @Autowired
     private VeiculoService service;
@@ -56,6 +56,7 @@ public class VeiculoController {
         var resp = modelMapper.map(veiculo, VeiculoResponse.class);
         return ResponseEntity.ok(resp);
     }
+
 
 
 

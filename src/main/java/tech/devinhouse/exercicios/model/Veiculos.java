@@ -20,7 +20,7 @@ public class Veiculos    {
 
     private Integer anoDeFabricacao;
 
-    private Integer quatidadeMultas;
+    private Integer qtdMultas;
 
     public Veiculos
             (String placa, String tipo, String cor, Integer anoDeFabricacao) {
@@ -28,6 +28,6 @@ public class Veiculos    {
         this.tipo = tipo;
         this.cor = cor;
         this.anoDeFabricacao = anoDeFabricacao;
-        this.quatidadeMultas = 0;
+        this.qtdMultas = 0;
     }
 }

@@ -37,7 +37,7 @@ public class VeiculoService {
     public void excluir(String placa) {
         Veiculos veiculo = repo.findById(placa)
                 .orElseThrow(RegistroNaoEncontradoException::new);
-        if (veiculo.getQuatidadeMultas() != 0)
+        if (veiculo.getQtdMultas() != 0)
             throw new FalhaExclusaoVeiculoComMultasException();
         repo.deleteById(placa);
     }
@@ -45,8 +45,8 @@ public class VeiculoService {
     public Veiculos adicionarMulta(String placa) {
         Veiculos veiculo = repo.findById(placa)
                 .orElseThrow(RegistroNaoEncontradoException::new);
-        int qtd = veiculo.getQuatidadeMultas() + 1;
-        veiculo.setQuatidadeMultas(qtd);
+        int qtd = veiculo.getQtdMultas() + 1;
+                 veiculo.setQtdMultas(qtd);
         veiculo = repo.save(veiculo);
         return veiculo;
     }
