@@ -118,18 +118,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         @Test
         @DisplayName("Quando placa nao cadastrada, deve retornar erro")
         void excluir_naoEncontrado() throws Exception {
-            Mockito.doThrow(RegistroNaoEncontradoException.class).when(service).excluir(Mockito.anyString());
+            Mockito.doThrow(RegistroNaoEncontradoException.class).when(service)
+                    .excluir(Mockito.anyString());
             mockMvc.perform(delete("/api/veiculos/{placa}", "ABC123")
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNotFound());
         }
 
         @Test
         @DisplayName("Quando veiculo tem multa, deve retornar erro")
         void excluir_temMulta() throws Exception {
-            Mockito.doThrow(FalhaExclusaoVeiculoComMultasException.class).when(service).excluir(Mockito.anyString());
+            Mockito.doThrow(FalhaExclusaoVeiculoComMultasException.class).when(service)
+                    .excluir(Mockito.anyString());
             mockMvc.perform(delete("/api/veiculos/{placa}", "ABC123")
-                            .contentType(MediaType.APPLICATION_JSON))
+                    .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isBadRequest());
         }
 
