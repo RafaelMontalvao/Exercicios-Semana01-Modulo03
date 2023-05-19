@@ -36,6 +36,7 @@ public class VeiculoController {
     @GetMapping
     public ResponseEntity<List<VeiculoResponse>> consultar() {
         List<Veiculos> veiculos = service.listar();
+        log.info("consulta retornando {} veiculos", veiculos.size());
         List<VeiculoResponse> veiculosResp = veiculos.stream()
                 .map(v -> modelMapper.map(v, VeiculoResponse.class)).toList();
         return ResponseEntity.ok(veiculosResp);
