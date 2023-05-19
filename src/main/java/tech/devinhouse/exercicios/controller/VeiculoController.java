@@ -1,5 +1,6 @@
 package tech.devinhouse.exercicios.controller;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/veiculos")
+@Slf4j
 public class VeiculoController {
     @Autowired
     private VeiculoService service;
@@ -23,6 +25,7 @@ public class VeiculoController {
 
     @PostMapping
     public ResponseEntity<VeiculoResponse> adicionar(@RequestBody @Valid VeiculoRequest request) {
+        log.debug("Dados da request: {} ", request);
         Veiculos veiculo = modelMapper.map(request, Veiculos.class);
         veiculo = service.inserir(veiculo);
         var resp = modelMapper.map(veiculo, VeiculoResponse.class);
