@@ -28,6 +28,7 @@ public class VeiculoController {
         log.debug("Dados da request: {} ", request);
         Veiculos veiculo = modelMapper.map(request, Veiculos.class);
         veiculo = service.inserir(veiculo);
+        log.info("Placa {} cadastrada com sucesso!", veiculo.getPlaca());
         var resp = modelMapper.map(veiculo, VeiculoResponse.class);
         return ResponseEntity.created(URI.create(veiculo.getPlaca())).body(resp);
     }

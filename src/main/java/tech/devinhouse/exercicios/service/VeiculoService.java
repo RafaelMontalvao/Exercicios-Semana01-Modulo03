@@ -1,6 +1,7 @@
 package tech.devinhouse.exercicios.service;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tech.devinhouse.exercicios.exception.FalhaExclusaoVeiculoComMultasException;
@@ -12,6 +13,7 @@ import tech.devinhouse.exercicios.repository.VeiculoRepository;
 import java.util.List;
 
 @Service
+@Slf4j
 public class VeiculoService {
 
     @Autowired
@@ -19,8 +21,10 @@ public class VeiculoService {
 
     public Veiculos inserir(Veiculos veiculo) {
         boolean existe = repo.existsById(veiculo.getPlaca());
-        if (existe)
+        if (existe){
+            log.info("Veiculo com placa ja cadastrada {}", veiculo.getPlaca());
             throw new RegistroExistenteException();
+        }
         veiculo = repo.save(veiculo);
         return veiculo;
     }
