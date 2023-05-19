@@ -1,6 +1,4 @@
 package tech.devinhouse.exercicios.service;
-
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,8 +7,8 @@ import tech.devinhouse.exercicios.exception.RegistroExistenteException;
 import tech.devinhouse.exercicios.exception.RegistroNaoEncontradoException;
 import tech.devinhouse.exercicios.model.Veiculos;
 import tech.devinhouse.exercicios.repository.VeiculoRepository;
-
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Slf4j
@@ -34,23 +32,39 @@ public class VeiculoService {
     }
 
     public Veiculos obter(String placa) {
-        return repo.findById(placa)
-                .orElseThrow(RegistroNaoEncontradoException::new);
+        Optional<Veiculos> veiculoOpt = repo.findById(placa);
+        if(veiculoOpt.isEmpty()){
+            log.error("Veiculo de placa {} não encontrada na base de dados" , placa);
+            throw new RegistroNaoEncontradoException();
+        }
+        return veiculoOpt.get();
+
     }
 
     public void excluir(String placa) {
-        Veiculos veiculo = repo.findById(placa)
-                .orElseThrow(RegistroNaoEncontradoException::new);
-        if (veiculo.getQtdMultas() != 0)
+        Optional<Veiculos> veiculoOpt = repo.findById(placa);
+        if(veiculoOpt.isEmpty()){
+            log.error("Veiculo de placa {} não encontrada na base de dados" , placa);
+            throw new RegistroNaoEncontradoException();
+        }
+        Veiculos veiculo = veiculoOpt.get();
+        if (veiculo.getQtdMultas() != 0){
+            log.error("Veiculo com multas e portanto nao pode ser excluido");
             throw new FalhaExclusaoVeiculoComMultasException();
+        }
+
         repo.deleteById(placa);
     }
 
     public Veiculos adicionarMulta(String placa) {
-        Veiculos veiculo = repo.findById(placa)
-                .orElseThrow(RegistroNaoEncontradoException::new);
+        Optional<Veiculos> veiculoOpt = repo.findById(placa);
+        if(veiculoOpt.isEmpty()){
+            log.error("Veiculo de placa {} não encontrada na base de dados" , placa);
+            throw new RegistroNaoEncontradoException();
+        }
+        Veiculos veiculo = veiculoOpt.get();
         int qtd = veiculo.getQtdMultas() + 1;
-                 veiculo.setQtdMultas(qtd);
+        veiculo.setQtdMultas(qtd);
         veiculo = repo.save(veiculo);
         return veiculo;
     }
